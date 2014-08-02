@@ -87,7 +87,7 @@ public class Functions
 
     public static int abilityCap(double maxAmount, double currentLevel)
     {
-        int tempCap = (int) (maxAmount * (currentLevel / getBaseMaxLevel()));
+        int tempCap = (int) (maxAmount * (currentLevel / maxPlayerLevel()));
 
         if (tempCap > maxAmount)
         {
@@ -306,30 +306,6 @@ public class Functions
         loc.setPitch(loc.getPitch() * 180f / (float) Math.PI);
 
         return loc;
-    }
-
-    public static List<Block> getBlocksInRadius(Location l, int radius)
-    {
-    	// Test 123
-        World w = l.getWorld();
-        int xCoord = (int) l.getX();
-        int zCoord = (int) l.getZ();
-        int YCoord = (int) l.getY();
-
-        List<Block> tempList = new ArrayList<Block>();
-
-        for (int x = 0; x <= 2 * radius; x++)
-        {
-            for (int z = 0; z <= 2 * radius; z++)
-            {
-                for (int y = 0; y <= 2 * radius; y++)
-                {
-                    tempList.add(w.getBlockAt(xCoord + x, YCoord + y, zCoord
-                            + z));
-                }
-            }
-        }
-        return tempList;
     }
 
     public static void Heal(LivingEntity entityToHeal, int amountToHeal)
