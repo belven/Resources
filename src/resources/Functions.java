@@ -310,7 +310,7 @@ public class Functions
 
     public static List<Block> getBlocksInRadius(Location l, int radius)
     {
-    	// Test
+    	// Test 123
         World w = l.getWorld();
         int xCoord = (int) l.getX();
         int zCoord = (int) l.getZ();
