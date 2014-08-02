@@ -115,6 +115,24 @@ public class Functions
         return AverageLevel;
     }
 
+    public static int maxPlayerLevel()
+    {
+        @SuppressWarnings("deprecation")
+        Player[] tempPlayers = Bukkit.getServer().getOnlinePlayers();
+
+        int maxLevel = 0;
+
+        for (Player p : tempPlayers)
+        {
+            if (maxLevel < p.getLevel())
+            {
+                maxLevel = p.getLevel();
+            }
+        }
+
+        return maxLevel;
+    }
+
     public static int getBaseMaxLevel()
     {
         int tempBase = (int) Math.round(averagePlayerLevel() * 1.2);

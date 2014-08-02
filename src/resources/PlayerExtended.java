@@ -30,6 +30,35 @@ public class PlayerExtended
         return ((Damageable) player).getMaxHealth();
     }
 
+    public double GetHealthPercent()
+    {
+        return EntityFunctions.entityCurrentHealthPercent(GetHealth(),
+                GetMaxHealth());
+    }
+
+    public double GetMissingHealthPercent()
+    {
+        return 1 - EntityFunctions.entityCurrentHealthPercent(GetHealth(),
+                GetMaxHealth());
+    }
+
+    public Gear GetGear()
+    {
+        return new Gear(player);
+    }
+
+    public boolean WeaponInHand()
+    {
+        return MaterialFunctions.isWeapon(GetInventory().getItemInHand()
+                .getType());
+    }
+
+    public boolean MeleeWeaponInHand()
+    {
+        return MaterialFunctions.isAMeeleWeapon(GetInventory().getItemInHand()
+                .getType());
+    }
+
     public Block GetBlockBelow()
     {
         return player.getLocation().getBlock().getRelative(BlockFace.DOWN);

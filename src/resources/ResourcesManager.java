@@ -9,6 +9,7 @@ public class ResourcesManager extends JavaPlugin
     @Override
     public void onEnable()
     {
+        
     }
 
     @Override
