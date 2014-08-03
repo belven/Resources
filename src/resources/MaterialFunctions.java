@@ -10,14 +10,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class MaterialFunctions {
 
-	private static final List<String> armor = Collections
-			.unmodifiableList(Arrays.asList("CHESTPLATE", "LEGGINGS", "HELMET",
-					"BOOTS"));
-	private static final List<String> food = Collections
-			.unmodifiableList(Arrays.asList("MUSHROOM_SOUP", "GOLDEN_APPLE",
-					"COOKED_CHICKEN", "ROTTEN_FLESH", "RAW_CHICKEN", "PORK",
-					"GRILLED_PORK", "BREAD", "MELON", "COOKED_BEEF", "RAW_BEEF",
-					"GOLDEN_CARROT", "CARROT", "COOKIE"));
+	private static final List<String> armor = Collections.unmodifiableList(Arrays.asList(
+			"CHESTPLATE", "LEGGINGS", "HELMET", "BOOTS"));
+	private static final List<String> food = Collections.unmodifiableList(Arrays.asList(
+			"MUSHROOM_SOUP", "GOLDEN_APPLE", "COOKED_CHICKEN", "ROTTEN_FLESH", "RAW_CHICKEN",
+			"PORK", "GRILLED_PORK", "BREAD", "MELON", "COOKED_BEEF", "RAW_BEEF", "GOLDEN_CARROT",
+			"CARROT", "COOKIE"));
+	private static final List<String> interactiveBlock = Collections.unmodifiableList(Arrays
+			.asList("CHEST", "WORKBENCH", "ANVIL", "FURNACE", "ENCHANTMENT_TABLE", "ENDER_CHEST",
+					"BED", "MINECART", "SIGN", "BUTTON", "LEVER"));
 
 	public static boolean isArmor(Material material) {
 		return armor.indexOf(material.toString()) != -1;
@@ -28,22 +29,7 @@ public class MaterialFunctions {
 	}
 
 	public static boolean isNotInteractiveBlock(Material material) {
-		switch (material.toString()) {
-		case "CHEST":
-		case "WORKBENCH":
-		case "ANVIL":
-		case "FURNACE":
-		case "ENCHANTMENT_TABLE":
-		case "ENDER_CHEST":
-		case "BED":
-		case "MINECART":
-		case "SIGN":
-		case "BUTTON":
-		case "LEVER":
-			return false;
-		default:
-			return true;
-		}
+		return interactiveBlock.indexOf(material.toString()) != 1;
 	}
 
 	public static ArrayList<ItemStack> getAllMeeleWeapons() {
