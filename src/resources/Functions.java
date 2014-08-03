@@ -193,7 +193,6 @@ public class Functions{
         
         return lst;
     	
-    	
     	/*
         World w = min.getWorld();
         List<Block> tempList = new ArrayList<Block>();
