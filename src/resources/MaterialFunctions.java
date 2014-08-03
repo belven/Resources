@@ -10,33 +10,21 @@ import org.bukkit.inventory.ItemStack;
 
 public class MaterialFunctions {
 
-	private static List<String> armor = Collections.unmodifiableList(Arrays.asList("CHESTPLATE", "LEGGINGS", "HELMET", "BOOTS"));
-	
+	private static final List<String> armor = Collections
+			.unmodifiableList(Arrays.asList("CHESTPLATE", "LEGGINGS", "HELMET",
+					"BOOTS"));
+	private static final List<String> food = Collections
+			.unmodifiableList(Arrays.asList("MUSHROOM_SOUP", "GOLDEN_APPLE",
+					"COOKED_CHICKEN", "ROTTEN_FLESH", "RAW_CHICKEN", "PORK",
+					"GRILLED_PORK", "BREAD", "MELON", "COOKED_BEEF", "RAW_BEEF",
+					"GOLDEN_CARROT", "CARROT", "COOKIE"));
 
 	public static boolean isArmor(Material material) {
 		return armor.indexOf(material.toString()) != -1;
 	}
 
 	public static boolean isFood(Material material) {
-		switch (material.toString()) {
-		case "MUSHROOM_SOUP":
-		case "GOLDEN_APPLE":
-		case "COOKED_CHICKEN":
-		case "ROTTEN_FLESH":
-		case "RAW_CHICKEN":
-		case "PORK":
-		case "GRILLED_PORK":
-		case "BREAD":
-		case "MELON":
-		case "COOKED_BEEF":
-		case "RAW_BEEF":
-		case "GOLDEN_CARROT":
-		case "CARROT":
-		case "COOKIE":
-			return true;
-		default:
-			return false;
-		}
+		return food.indexOf(material.toString()) != -1;
 	}
 
 	public static boolean isNotInteractiveBlock(Material material) {
