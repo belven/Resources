@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -16,9 +17,10 @@ import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.util.Vector;
 
-public class EntityFunctions{
-	
-	public static Player[] getNearbyPlayers(Location l, int radius)
+public class EntityFunctions
+{
+
+    public static Player[] getNearbyPlayers(Location l, int radius)
     {
         int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
         HashSet<Entity> radiusEntities = new HashSet<Entity>();
@@ -43,7 +45,7 @@ public class EntityFunctions{
 
         return radiusEntities.toArray(new Player[radiusEntities.size()]);
     }
-    
+
     @SuppressWarnings("deprecation")
     public static Player[] getNearbyPlayersNew(Location l, int radius)
     {
@@ -60,23 +62,25 @@ public class EntityFunctions{
 
         return radiusEntities.toArray(new Player[radiusEntities.size()]);
     }
-	
-	public static LivingEntity GetDamager(EntityDamageByEntityEvent event)
+
+    @SuppressWarnings("deprecation")
+    public static LivingEntity GetDamager(EntityDamageByEntityEvent event)
     {
         Entity damagerEntity = event.getDamager();
 
-        if (damagerEntity.getType() == EntityType.PLAYER)
+        if (damagerEntity instanceof LivingEntity)
         {
             return (LivingEntity) damagerEntity;
         }
         else if (damagerEntity.getType() == EntityType.ARROW)
         {
-            // Arrow currentArrow = (Arrow) damagerEntity;
-            // return currentArrow.getShooter();
-            return null;
+            Arrow currentArrow = (Arrow) damagerEntity;
+            return currentArrow.getShooter();
         }
         else if (damagerEntity.getType() == EntityType.FIREBALL)
         {
+            // Fireball currentFireball = (Fireball) damagerEntity;
+            // return currentFireball.getShooter();
             return null;
         }
         else
@@ -186,8 +190,9 @@ public class EntityFunctions{
         return target;
     }
 
-    public static LivingEntity findTargetPlayer(Player origin, double radius){
-    	
+    public static LivingEntity findTargetPlayer(Player origin, double radius)
+    {
+
         Location originLocation = origin.getEyeLocation();
         Vector originDirection = originLocation.getDirection();
         Vector originVector = originLocation.toVector();
@@ -215,8 +220,9 @@ public class EntityFunctions{
         return target;
     }
 
-    public static List<LivingEntity> getNearbyEntities(Location l, int radius){
-    	
+    public static List<LivingEntity> getNearbyEntities(Location l, int radius)
+    {
+
         int chunkRadius = radius < 16 ? 1 : (radius - radius % 16) / 16;
         List<LivingEntity> arrayOfLivingEntity = new ArrayList<LivingEntity>();
         for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++)
@@ -246,8 +252,9 @@ public class EntityFunctions{
         return arrayOfLivingEntity;
     }
 
-    public static LivingEntity findTargetEntity(Player origin, double radius){
-    	
+    public static LivingEntity findTargetEntity(Player origin, double radius)
+    {
+
         Location originLocation = origin.getEyeLocation();
         Vector originDirection = originLocation.getDirection();
         Vector originVector = originLocation.toVector();
@@ -275,8 +282,10 @@ public class EntityFunctions{
         return target;
     }
 
-    public static boolean isHealthLessThanOther(LivingEntity le1, LivingEntity le2){
-    	
+    public static boolean isHealthLessThanOther(LivingEntity le1,
+            LivingEntity le2)
+    {
+
         Damageable dPlayer = le1;
         Damageable dOwner = le2;
 
@@ -294,13 +303,15 @@ public class EntityFunctions{
     {
         return currentHealth / maxHealth;
     }
-    
+
     // Mobs
-    public static Location move(Location loc, Vector offset){
+    public static Location move(Location loc, Vector offset)
+    {
         return move(loc, offset.getX(), offset.getY(), offset.getZ());
     }
 
-    public static Location move(Location loc, double dx, double dy, double dz){
+    public static Location move(Location loc, double dx, double dy, double dz)
+    {
         Vector off = rotate(loc.getYaw(), loc.getPitch(), dx, dy, dz);
         double x = loc.getX() + off.getX();
         double y = loc.getY() + off.getY();
@@ -309,7 +320,9 @@ public class EntityFunctions{
                 loc.getPitch());
     }
 
-    public static Vector rotate(float yaw, float pitch, double x, double y, double z){
+    public static Vector rotate(float yaw, float pitch, double x, double y,
+            double z)
+    {
         float angle = yaw * 0.01745329F;
         double sinyaw = Math.sin(angle);
         double cosyaw = Math.cos(angle);
@@ -332,8 +345,9 @@ public class EntityFunctions{
 
         return new Vector(newx, newy, newz);
     }
-    
-    public static void Heal(LivingEntity entityToHeal, int amountToHeal){
+
+    public static void Heal(LivingEntity entityToHeal, int amountToHeal)
+    {
         Damageable dEntityToHeal = (Damageable) entityToHeal;
         double max = dEntityToHeal.getMaxHealth();
         double current = dEntityToHeal.getHealth();
@@ -350,7 +364,8 @@ public class EntityFunctions{
         }
     }
 
-    public static void RestoreHunger(Player entityToRestore, int amountToRestore){
+    public static void RestoreHunger(Player entityToRestore, int amountToRestore)
+    {
         if (entityToRestore != null)
         {
             for (int i = amountToRestore; i != 0; i--)
@@ -364,7 +379,9 @@ public class EntityFunctions{
         }
     }
 
-    public static void RestoreSaturation(Player entityToRestore, int amountToRestore){
+    public static void RestoreSaturation(Player entityToRestore,
+            int amountToRestore)
+    {
         if (entityToRestore != null)
         {
             for (int i = amountToRestore; i != 0; i--)
@@ -377,7 +394,7 @@ public class EntityFunctions{
             }
         }
     }
-    
+
     public static boolean IsUndeadMob(EntityType currentEntityType)
     {
         if (currentEntityType == EntityType.PIG_ZOMBIE
@@ -392,7 +409,7 @@ public class EntityFunctions{
             return false;
         }
     }
-    
+
     private final static List<EntityType> mobs = Arrays.asList(
             EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER,
             EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.GHAST,
@@ -421,9 +438,10 @@ public class EntityFunctions{
         return (mhp != -1) ? mhp : slimeSize[(int) (Math.log(((Slime) entity)
                 .getSize()) / Math.log(2))];
     }
-    
-    public static Location lookAt(Location loc, Location lookat){
-    	
+
+    public static Location lookAt(Location loc, Location lookat)
+    {
+
         loc = loc.clone();
 
         double dx = lookat.getX() - loc.getX();

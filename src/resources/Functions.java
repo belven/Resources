@@ -1,8 +1,6 @@
 package resources;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -10,20 +8,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
-import org.bukkit.util.Vector;
 
-public class Functions{
+public class Functions
+{
 
     public static boolean debuffs(PotionEffectType pet)
     {
@@ -43,7 +35,7 @@ public class Functions{
             return false;
         }
     }
-    
+
     // NEEDS TO BE MOVED
     public static int abilityCap(double maxAmount, double currentLevel)
     {
@@ -107,7 +99,7 @@ public class Functions{
     {
         return 60;
     }
-    
+
     // NEEDS TO BE MOVED
     public static double ScaleDamage(int Level, double damageDone,
             int levelDivider)
@@ -116,16 +108,18 @@ public class Functions{
     }
 
     // NEEDS TO BE MOVED
-    public static double damageToDo(double damageDone, double currentHealth, double maxHealth){
+    public static double damageToDo(double damageDone, double currentHealth,
+            double maxHealth)
+    {
         return damageDone
                 + (damageDone * (1 - EntityFunctions
                         .entityCurrentHealthPercent(currentHealth, maxHealth)));
     }
 
     @SuppressWarnings("deprecation")
-    public static void AddToInventory(Player p, ItemStack is)
+    public static void AddToInventory(Player p, ItemStack is, int max)
     {
-        int maxAmount = is.getMaxStackSize() - is.getAmount();
+        int maxAmount = (max - is.getAmount()) + 1;
 
         if (is.getMaxStackSize() == 1
                 && !p.getInventory().contains(is.getType(), 1))
@@ -138,6 +132,11 @@ public class Functions{
         }
 
         p.updateInventory();
+    }
+
+    public static void AddToInventory(Player p, ItemStack is)
+    {
+        AddToInventory(p, is, is.getMaxStackSize());
     }
 
     public static Location offsetLocation(Location l, double x, double y,
@@ -160,58 +159,57 @@ public class Functions{
                 new ItemStack(new Potion(pt, level).toItemStack(1)), amountInI);
     }
 
-    public static boolean numberBetween(double number, double start, double end){
+    public static boolean numberBetween(double number, double start, double end)
+    {
         return (number >= start) && (number < end);
     }
 
-    public static List<Block> getBlocksBetweenPoints(Location min, Location max){
-    	
-    	World w = min.getWorld();
-        
+    public static List<Block> getBlocksBetweenPoints(Location min, Location max)
+    {
+
+        World w = min.getWorld();
+
         final int minX = min.getBlockX();
         final int maxX = max.getBlockX() + 1;
-        
+
         final int minY = min.getBlockY();
         final int maxY = max.getBlockY() + 1;
-        
+
         final int minZ = min.getBlockZ();
         final int maxZ = max.getBlockZ() + 1;
-        
-        final int size =  (max.getBlockX() - min.getBlockX()) * 
-        				  (max.getBlockY() - min.getBlockY()) * 
-        				  (max.getBlockZ() - max.getBlockZ());
-        
+
+        final int size = (max.getBlockX() - min.getBlockX())
+                * (max.getBlockY() - min.getBlockY())
+                * (max.getBlockZ() - max.getBlockZ());
+
         List<Block> lst = new ArrayList<Block>(size);
 
-        for(int x = minX; x < maxX; ++x){
-            for(int y = minY; y < maxY; ++y){
-                for(int z = minZ; z < maxZ; ++z){
-                	lst.add(w.getBlockAt(x, y, z));
-                }
-            }
-        }
-        
-        return lst;
-    	
-    	/*
-        World w = min.getWorld();
-        List<Block> tempList = new ArrayList<Block>();
-
-        for (int x = min.getBlockX(); x <= max.getBlockX(); x = x + 1)
+        for (int x = minX; x < maxX; ++x)
         {
-            for (int y = min.getBlockY(); y <= max.getBlockY(); y = y + 1)
+            for (int y = minY; y < maxY; ++y)
             {
-                for (int z = min.getBlockZ(); z <= max.getBlockZ(); z = z + 1)
+                for (int z = minZ; z < maxZ; ++z)
                 {
-                    tempList.add(w.getBlockAt(x, y, z));
+                    lst.add(w.getBlockAt(x, y, z));
                 }
             }
         }
-        return tempList;
-        */
+
+        return lst;
+
+        /*
+         * World w = min.getWorld(); List<Block> tempList = new
+         * ArrayList<Block>();
+         * 
+         * for (int x = min.getBlockX(); x <= max.getBlockX(); x = x + 1) { for
+         * (int y = min.getBlockY(); y <= max.getBlockY(); y = y + 1) { for (int
+         * z = min.getBlockZ(); z <= max.getBlockZ(); z = z + 1) {
+         * tempList.add(w.getBlockAt(x, y, z)); } } } return tempList;
+         */
     }
 
-    public static int SecondsToTicks(int seconds){
+    public static int SecondsToTicks(int seconds)
+    {
         return seconds * 20;
     }
 
