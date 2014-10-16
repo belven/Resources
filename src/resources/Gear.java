@@ -44,8 +44,7 @@ public class Gear {
 			inv.setItemInHand(w);
 	}
 
-	public Gear(ItemStack helmet, ItemStack chest, ItemStack legs,
-			ItemStack boots, ItemStack weapon) {
+	public Gear(ItemStack helmet, ItemStack chest, ItemStack legs, ItemStack boots, ItemStack weapon) {
 		h = helmet;
 		c = chest;
 		l = legs;

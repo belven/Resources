@@ -27,10 +27,8 @@ public class EntityFunctions {
 			for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
 				int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
 
-				for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z
-						+ (chZ * 16)).getChunk().getEntities()) {
-					if (e instanceof Player
-							&& e.getLocation().distance(l) <= radius) {
+				for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
+					if (e instanceof Player && e.getLocation().distance(l) <= radius) {
 						radiusEntities.add((Player) e);
 					}
 				}
@@ -45,8 +43,7 @@ public class EntityFunctions {
 		HashSet<Entity> radiusEntities = new HashSet<Entity>();
 
 		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			if (p.getLocation().getWorld() == l.getWorld()
-					&& p.getLocation().distance(l) <= radius) {
+			if (p.getLocation().getWorld() == l.getWorld() && p.getLocation().distance(l) <= radius) {
 				radiusEntities.add(p);
 			}
 		}
@@ -74,15 +71,14 @@ public class EntityFunctions {
 
 	public static LivingEntity GetDamager(LivingEntity le) {
 		if (le.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-			return GetDamager((EntityDamageByEntityEvent) le
-					.getLastDamageCause());
+			return GetDamager((EntityDamageByEntityEvent) le.getLastDamageCause());
 		} else {
 			return null;
 		}
 	}
 
-	public static List<LivingEntity> findTargetEntityByType(Player origin,
-			double radius, List<EntityType> types, int maxTargets) {
+	public static List<LivingEntity> findTargetEntityByType(Player origin, double radius, List<EntityType> types,
+			int maxTargets) {
 		int count = 0;
 		Location originLocation = origin.getEyeLocation();
 		Vector originDirection = originLocation.getDirection();
@@ -97,12 +93,10 @@ public class EntityFunctions {
 			if ((!entity.equals(origin)) && ((entity instanceof LivingEntity))) {
 				LivingEntity living = (LivingEntity) entity;
 
-				Vector toTarget = living.getEyeLocation().toVector()
-						.subtract(originVector).normalize();
+				Vector toTarget = living.getEyeLocation().toVector().subtract(originVector).normalize();
 
 				double dotProduct = toTarget.dot(originDirection);
-				if ((types.contains(living.getType())) && (dotProduct > 0.3D)
-						&& (origin.hasLineOfSight(living))
+				if ((types.contains(living.getType())) && (dotProduct > 0.3D) && (origin.hasLineOfSight(living))
 						&& ((targets == null) || (dotProduct > minDotProduct))) {
 					count++;
 					targets.add(living);
@@ -113,8 +107,7 @@ public class EntityFunctions {
 		return targets;
 	}
 
-	public static LivingEntity findTargetEntityByType(Player origin,
-			double radius, List<EntityType> types) {
+	public static LivingEntity findTargetEntityByType(Player origin, double radius, List<EntityType> types) {
 		Location originLocation = origin.getEyeLocation();
 		Vector originDirection = originLocation.getDirection();
 		Vector originVector = originLocation.toVector();
@@ -126,11 +119,9 @@ public class EntityFunctions {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
-				Vector toTarget = newTargetLocation.toVector()
-						.subtract(originVector).normalize();
+				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
-				if ((types.contains(living.getType())) && (dotProduct > 0.3D)
-						&& (origin.hasLineOfSight(living))
+				if ((types.contains(living.getType())) && (dotProduct > 0.3D) && (origin.hasLineOfSight(living))
 						&& ((target == null) || (dotProduct > minDotProduct))) {
 					target = living;
 					minDotProduct = dotProduct;
@@ -141,8 +132,7 @@ public class EntityFunctions {
 		return target;
 	}
 
-	public static LivingEntity findTargetEntityByType(Player origin,
-			double radius, EntityType type) {
+	public static LivingEntity findTargetEntityByType(Player origin, double radius, EntityType type) {
 		Location originLocation = origin.getEyeLocation();
 		Vector originDirection = originLocation.getDirection();
 		Vector originVector = originLocation.toVector();
@@ -154,11 +144,9 @@ public class EntityFunctions {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
-				Vector toTarget = newTargetLocation.toVector()
-						.subtract(originVector).normalize();
+				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
-				if ((living.getType() == type) && (dotProduct > 0.3D)
-						&& (origin.hasLineOfSight(living))
+				if ((living.getType() == type) && (dotProduct > 0.3D) && (origin.hasLineOfSight(living))
 						&& ((target == null) || (dotProduct > minDotProduct))) {
 					target = living;
 					minDotProduct = dotProduct;
@@ -182,11 +170,9 @@ public class EntityFunctions {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
-				Vector toTarget = newTargetLocation.toVector()
-						.subtract(originVector).normalize();
+				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
-				if (dotProduct > 0.3D && origin.hasLineOfSight(living)
-						&& dotProduct > minDotProduct) {
+				if (dotProduct > 0.3D && origin.hasLineOfSight(living) && dotProduct > minDotProduct) {
 					targets.add(living);
 					minDotProduct = dotProduct;
 				}
@@ -208,8 +194,7 @@ public class EntityFunctions {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
-				Vector toTarget = newTargetLocation.toVector()
-						.subtract(originVector).normalize();
+				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
 				if ((dotProduct > 0.3D) && (origin.hasLineOfSight(living))
 						&& ((target == null) || (dotProduct > minDotProduct))) {
@@ -233,13 +218,12 @@ public class EntityFunctions {
 
 				Entity[] arrayOfEntity;
 
-				int j = (arrayOfEntity = new Location(l.getWorld(), x + chX
-						* 16, y, z + chZ * 16).getChunk().getEntities()).length;
+				int j = (arrayOfEntity = new Location(l.getWorld(), x + chX * 16, y, z + chZ * 16).getChunk()
+						.getEntities()).length;
 
 				for (int i = 0; i < j; i++) {
 					Entity e = arrayOfEntity[i];
-					if ((e.getLocation().distance(l) <= radius)
-							&& e instanceof LivingEntity) {
+					if ((e.getLocation().distance(l) <= radius) && e instanceof LivingEntity) {
 						arrayOfLivingEntity.add((LivingEntity) e);
 					}
 				}
@@ -261,8 +245,7 @@ public class EntityFunctions {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
-				Vector toTarget = newTargetLocation.toVector()
-						.subtract(originVector).normalize();
+				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
 				if ((dotProduct > 0.3D) && (origin.hasLineOfSight(living))
 						&& ((target == null) || (dotProduct > minDotProduct))) {
@@ -274,23 +257,19 @@ public class EntityFunctions {
 		return target;
 	}
 
-	public static boolean isHealthLessThanOther(LivingEntity le1,
-			LivingEntity le2) {
+	public static boolean isHealthLessThanOther(LivingEntity le1, LivingEntity le2) {
 
 		Damageable dPlayer = le1;
 		Damageable dOwner = le2;
 
-		double otherHealth = entityCurrentHealthPercent(dPlayer.getHealth(),
-				dPlayer.getMaxHealth());
+		double otherHealth = entityCurrentHealthPercent(dPlayer.getHealth(), dPlayer.getMaxHealth());
 
-		double selfHealth = entityCurrentHealthPercent(dOwner.getHealth(),
-				dOwner.getMaxHealth());
+		double selfHealth = entityCurrentHealthPercent(dOwner.getHealth(), dOwner.getMaxHealth());
 
 		return otherHealth < selfHealth;
 	}
 
-	public static double entityCurrentHealthPercent(double currentHealth,
-			double maxHealth) {
+	public static double entityCurrentHealthPercent(double currentHealth, double maxHealth) {
 		return currentHealth / maxHealth;
 	}
 
@@ -304,12 +283,10 @@ public class EntityFunctions {
 		double x = loc.getX() + off.getX();
 		double y = loc.getY() + off.getY();
 		double z = loc.getZ() + off.getZ();
-		return new Location(loc.getWorld(), x, y, z, loc.getYaw(),
-				loc.getPitch());
+		return new Location(loc.getWorld(), x, y, z, loc.getYaw(), loc.getPitch());
 	}
 
-	public static Vector rotate(float yaw, float pitch, double x, double y,
-			double z) {
+	public static Vector rotate(float yaw, float pitch, double x, double y, double z) {
 		float angle = yaw * 0.01745329F;
 		double sinyaw = Math.sin(angle);
 		double cosyaw = Math.cos(angle);
@@ -351,41 +328,34 @@ public class EntityFunctions {
 		if (entityToRestore != null) {
 			for (int i = amountToRestore; i != 0; i--) {
 				if ((entityToRestore.getFoodLevel() + i) < 10) {
-					entityToRestore.setFoodLevel(entityToRestore.getFoodLevel()
-							+ i);
+					entityToRestore.setFoodLevel(entityToRestore.getFoodLevel() + i);
 				}
 			}
 		}
 	}
 
-	public static void RestoreSaturation(Player entityToRestore,
-			int amountToRestore) {
+	public static void RestoreSaturation(Player entityToRestore, int amountToRestore) {
 		if (entityToRestore != null) {
 			for (int i = amountToRestore; i != 0; i--) {
 				if ((entityToRestore.getSaturation() + i) < 10) {
-					entityToRestore.setSaturation(entityToRestore
-							.getSaturation() + i);
+					entityToRestore.setSaturation(entityToRestore.getSaturation() + i);
 				}
 			}
 		}
 	}
 
 	public static boolean IsUndeadMob(EntityType currentEntityType) {
-		if (currentEntityType == EntityType.PIG_ZOMBIE
-				|| currentEntityType == EntityType.SKELETON
-				|| currentEntityType == EntityType.WITHER
-				|| currentEntityType == EntityType.ZOMBIE) {
+		if (currentEntityType == EntityType.PIG_ZOMBIE || currentEntityType == EntityType.SKELETON
+				|| currentEntityType == EntityType.WITHER || currentEntityType == EntityType.ZOMBIE) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private final static List<EntityType> mobs = Arrays.asList(
-			EntityType.BLAZE, EntityType.CAVE_SPIDER, EntityType.CREEPER,
-			EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.GHAST,
-			EntityType.MAGMA_CUBE, EntityType.PIG_ZOMBIE, EntityType.SKELETON,
-			EntityType.SPIDER, EntityType.SLIME, EntityType.WITCH,
+	private final static List<EntityType> mobs = Arrays.asList(EntityType.BLAZE, EntityType.CAVE_SPIDER,
+			EntityType.CREEPER, EntityType.ENDER_DRAGON, EntityType.ENDERMAN, EntityType.GHAST, EntityType.MAGMA_CUBE,
+			EntityType.PIG_ZOMBIE, EntityType.SKELETON, EntityType.SPIDER, EntityType.SLIME, EntityType.WITCH,
 			EntityType.WITHER, EntityType.ZOMBIE);
 
 	public static boolean IsAMob(EntityType currentEntityType) {
@@ -395,15 +365,13 @@ public class EntityFunctions {
 	public static double MobMaxHealth(LivingEntity entity) {
 		// -1 is for slime's
 
-		final double[] maxHP = { 20.0, 12.0, 20.0, 200.0, 40.0, 10.0, -1, 20.0,
-				20.0, 16.0, -1, 26.0, 300.0, 20.0 };
+		final double[] maxHP = { 20.0, 12.0, 20.0, 200.0, 40.0, 10.0, -1, 20.0, 20.0, 16.0, -1, 26.0, 300.0, 20.0 };
 
 		final double[] slimeSize = { 1.0, 4.0, 16.0 };
 
 		final double mhp = maxHP[mobs.indexOf(entity)];
 
-		return (mhp != -1) ? mhp : slimeSize[(int) (Math.log(((Slime) entity)
-				.getSize()) / Math.log(2))];
+		return (mhp != -1) ? mhp : slimeSize[(int) (Math.log(((Slime) entity).getSize()) / Math.log(2))];
 	}
 
 	public static Location lookAt(Location loc, Location lookat) {

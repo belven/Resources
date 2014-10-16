@@ -21,15 +21,13 @@ public class ClassDrop {
 		maxAmount = max;
 	}
 
-	public ClassDrop(ItemStack item, boolean give, int max,
-			int wildernessQuantity) {
+	public ClassDrop(ItemStack item, boolean give, int max, int wildernessQuantity) {
 		this(item, give, max);
 		wildernessAmount = wildernessQuantity;
 		isWilderness = true;
 	}
 
-	public ClassDrop(ItemStack item, int low, int high, int max,
-			int wildernessQuantity) {
+	public ClassDrop(ItemStack item, int low, int high, int max, int wildernessQuantity) {
 		this(item, low, high, max);
 		wildernessAmount = wildernessQuantity;
 		isWilderness = true;

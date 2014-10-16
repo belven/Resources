@@ -10,23 +10,17 @@ import org.bukkit.inventory.ItemStack;
 
 public class MaterialFunctions {
 
-	private static final List<String> armor = Collections
-			.unmodifiableList(Arrays.asList("IRON_CHESTPLATE", "IRON_LEGGINGS",
-					"IRON_HELMET", "IRON_BOOTS", "LEATHER_CHESTPLATE",
-					"LEATHER_LEGGINGS", "LEATHER_HELMET", "LEATHER_BOOTS",
-					"GOLD_CHESTPLATE", "GOLD_LEGGINGS", "GOLD_HELMET",
-					"GOLD_BOOTS", "DIAMOND_CHESTPLATE", "DIAMOND_LEGGINGS",
-					"DIAMOND_HELMET", "DIAMOND_BOOTS"));
+	private static final List<String> armor = Collections.unmodifiableList(Arrays.asList("IRON_CHESTPLATE",
+			"IRON_LEGGINGS", "IRON_HELMET", "IRON_BOOTS", "LEATHER_CHESTPLATE", "LEATHER_LEGGINGS", "LEATHER_HELMET",
+			"LEATHER_BOOTS", "GOLD_CHESTPLATE", "GOLD_LEGGINGS", "GOLD_HELMET", "GOLD_BOOTS", "DIAMOND_CHESTPLATE",
+			"DIAMOND_LEGGINGS", "DIAMOND_HELMET", "DIAMOND_BOOTS"));
 
-	private static final List<String> food = Collections
-			.unmodifiableList(Arrays.asList("MUSHROOM_SOUP", "GOLDEN_APPLE",
-					"COOKED_CHICKEN", "ROTTEN_FLESH", "RAW_CHICKEN", "PORK",
-					"GRILLED_PORK", "BREAD", "MELON", "COOKED_BEEF",
-					"RAW_BEEF", "GOLDEN_CARROT", "CARROT", "COOKIE"));
-	private static final List<String> interactiveBlock = Collections
-			.unmodifiableList(Arrays.asList("CHEST", "WORKBENCH", "ANVIL",
-					"FURNACE", "ENCHANTMENT_TABLE", "ENDER_CHEST", "BED",
-					"MINECART", "SIGN", "BUTTON", "LEVER"));
+	private static final List<String> food = Collections.unmodifiableList(Arrays.asList("MUSHROOM_SOUP",
+			"GOLDEN_APPLE", "COOKED_CHICKEN", "ROTTEN_FLESH", "RAW_CHICKEN", "PORK", "GRILLED_PORK", "BREAD", "MELON",
+			"COOKED_BEEF", "RAW_BEEF", "GOLDEN_CARROT", "CARROT", "COOKIE"));
+	private static final List<String> interactiveBlock = Collections.unmodifiableList(Arrays.asList("CHEST",
+			"WORKBENCH", "ANVIL", "FURNACE", "ENCHANTMENT_TABLE", "ENDER_CHEST", "BED", "MINECART", "SIGN", "BUTTON",
+			"LEVER"));
 
 	public static boolean isArmor(Material material) {
 		return armor.indexOf(material.toString()) != -1;

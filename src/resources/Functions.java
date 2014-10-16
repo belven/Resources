@@ -14,203 +14,164 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class Functions
-{
+public class Functions {
 
-    public static boolean debuffs(PotionEffectType pet)
-    {
-        switch (pet.toString())
-        {
-        case "HUNGER":
-        case "BLINDNESS":
-        case "CONFUSION":
-        case "POISON":
-        case "SLOW":
-        case "SLOW_DIGGING":
-        case "WEAKNESS":
-        case "WITHER":
-            return true;
+	public static boolean debuffs(PotionEffectType pet) {
+		switch (pet.toString()) {
+		case "HUNGER":
+		case "BLINDNESS":
+		case "CONFUSION":
+		case "POISON":
+		case "SLOW":
+		case "SLOW_DIGGING":
+		case "WEAKNESS":
+		case "WITHER":
+			return true;
 
-        default:
-            return false;
-        }
-    }
+		default:
+			return false;
+		}
+	}
 
-    // NEEDS TO BE MOVED
-    public static int abilityCap(double maxAmount, double currentLevel)
-    {
-        int tempCap = (int) (maxAmount * (currentLevel / getBaseMaxLevel()));
+	// NEEDS TO BE MOVED
+	public static int abilityCap(double maxAmount, double currentLevel) {
+		int tempCap = (int) (maxAmount * (currentLevel / getBaseMaxLevel()));
 
-        if (tempCap > maxAmount)
-        {
-            tempCap = (int) maxAmount;
-        }
+		if (tempCap > maxAmount) {
+			tempCap = (int) maxAmount;
+		}
 
-        return tempCap;
-    }
+		return tempCap;
+	}
 
-    // NEEDS TO BE MOVED
-    public static int averagePlayerLevel()
-    {
-        @SuppressWarnings("deprecation")
-        Player[] tempPlayers = Bukkit.getServer().getOnlinePlayers();
+	// NEEDS TO BE MOVED
+	public static int averagePlayerLevel() {
+		@SuppressWarnings("deprecation")
+		Player[] tempPlayers = Bukkit.getServer().getOnlinePlayers();
 
-        int AverageLevel = 0;
-        int totalLevel = 0;
+		int AverageLevel = 0;
+		int totalLevel = 0;
 
-        for (Player p : tempPlayers)
-        {
-            totalLevel += p.getLevel();
-        }
+		for (Player p : tempPlayers) {
+			totalLevel += p.getLevel();
+		}
 
-        AverageLevel = (totalLevel / tempPlayers.length);
+		AverageLevel = (totalLevel / tempPlayers.length);
 
-        return AverageLevel;
-    }
+		return AverageLevel;
+	}
 
-    // NEEDS TO BE MOVED
-    public static int maxPlayerLevel()
-    {
-        @SuppressWarnings("deprecation")
-        Player[] tempPlayers = Bukkit.getServer().getOnlinePlayers();
+	// NEEDS TO BE MOVED
+	public static int maxPlayerLevel() {
+		@SuppressWarnings("deprecation")
+		Player[] tempPlayers = Bukkit.getServer().getOnlinePlayers();
 
-        int maxLevel = 0;
+		int maxLevel = 0;
 
-        for (Player p : tempPlayers)
-        {
-            if (maxLevel < p.getLevel())
-            {
-                maxLevel = p.getLevel();
-            }
-        }
+		for (Player p : tempPlayers) {
+			if (maxLevel < p.getLevel()) {
+				maxLevel = p.getLevel();
+			}
+		}
 
-        return maxLevel;
-    }
+		return maxLevel;
+	}
 
-    // NEEDS TO BE MOVED
-    public static int getBaseMaxLevel()
-    {
-        int tempBase = (int) Math.round(averagePlayerLevel() * 1.2);
+	// NEEDS TO BE MOVED
+	public static int getBaseMaxLevel() {
+		int tempBase = (int) Math.round(averagePlayerLevel() * 1.2);
 
-        return tempBase < getMinMaxLevel() ? getMinMaxLevel() : tempBase;
-    }
+		return tempBase < getMinMaxLevel() ? getMinMaxLevel() : tempBase;
+	}
 
-    public static int getMinMaxLevel()
-    {
-        return 60;
-    }
+	public static int getMinMaxLevel() {
+		return 60;
+	}
 
-    // NEEDS TO BE MOVED
-    public static double ScaleDamage(int Level, double damageDone,
-            int levelDivider)
-    {
-        return damageDone + Level / levelDivider;
-    }
+	// NEEDS TO BE MOVED
+	public static double ScaleDamage(int Level, double damageDone, int levelDivider) {
+		return damageDone + Level / levelDivider;
+	}
 
-    // NEEDS TO BE MOVED
-    public static double damageToDo(double damageDone, double currentHealth,
-            double maxHealth)
-    {
-        return damageDone
-                + (damageDone * (1 - EntityFunctions
-                        .entityCurrentHealthPercent(currentHealth, maxHealth)));
-    }
+	// NEEDS TO BE MOVED
+	public static double damageToDo(double damageDone, double currentHealth, double maxHealth) {
+		return damageDone + (damageDone * (1 - EntityFunctions.entityCurrentHealthPercent(currentHealth, maxHealth)));
+	}
 
-    @SuppressWarnings("deprecation")
-    public static void AddToInventory(Player p, ItemStack is, int max)
-    {
-        int maxAmount = (max - is.getAmount()) + 1;
+	@SuppressWarnings("deprecation")
+	public static void AddToInventory(Player p, ItemStack is, int max) {
+		int maxAmount = (max - is.getAmount()) + 1;
 
-        if (is.getMaxStackSize() == 1
-                && !p.getInventory().contains(is.getType(), 1))
-        {
-            p.getInventory().addItem(is);
-        }
-        else if (!p.getInventory().contains(is.getType(), maxAmount))
-        {
-            p.getInventory().addItem(is);
-        }
+		if (is.getMaxStackSize() == 1 && !p.getInventory().contains(is.getType(), 1)) {
+			p.getInventory().addItem(is);
+		} else if (!p.getInventory().contains(is.getType(), maxAmount)) {
+			p.getInventory().addItem(is);
+		}
 
-        p.updateInventory();
-    }
+		p.updateInventory();
+	}
 
-    public static void AddToInventory(Player p, ItemStack is)
-    {
-        AddToInventory(p, is, is.getMaxStackSize());
-    }
+	public static void AddToInventory(Player p, ItemStack is) {
+		AddToInventory(p, is, is.getMaxStackSize());
+	}
 
-    public static Location offsetLocation(Location l, double x, double y,
-            double z)
-    {
-        return new Location(l.getWorld(), l.getX() + x, l.getY() + y, l.getZ()
-                + z);
-    }
+	public static Location offsetLocation(Location l, double x, double y, double z) {
+		return new Location(l.getWorld(), l.getX() + x, l.getY() + y, l.getZ() + z);
+	}
 
-    public static boolean deosPlayersInventoryContainAtLeast(Player p,
-            Material m, int amountInI)
-    {
-        return p.getInventory().containsAtLeast(new ItemStack(m), amountInI);
-    }
+	public static boolean deosPlayersInventoryContainAtLeast(Player p, Material m, int amountInI) {
+		return p.getInventory().containsAtLeast(new ItemStack(m), amountInI);
+	}
 
-    public static boolean deosPlayersInventoryContainAtLeast(Player p,
-            PotionType pt, int amountInI, int level)
-    {
-        return p.getInventory().containsAtLeast(
-                new ItemStack(new Potion(pt, level).toItemStack(1)), amountInI);
-    }
+	public static boolean deosPlayersInventoryContainAtLeast(Player p, PotionType pt, int amountInI, int level) {
+		return p.getInventory().containsAtLeast(new ItemStack(new Potion(pt, level).toItemStack(1)), amountInI);
+	}
 
-    public static boolean numberBetween(double number, double start, double end)
-    {
-        return (number >= start) && (number < end);
-    }
+	public static boolean numberBetween(double number, double start, double end) {
+		return (number >= start) && (number < end);
+	}
 
-    public static List<Block> getBlocksBetweenPoints(Location min, Location max)
-    {
+	public static List<Block> getBlocksBetweenPoints(Location min, Location max) {
 
-        World w = min.getWorld();
+		World w = min.getWorld();
 
-        final int minX = min.getBlockX();
-        final int maxX = max.getBlockX() + 1;
+		final int minX = min.getBlockX();
+		final int maxX = max.getBlockX() + 1;
 
-        final int minY = min.getBlockY();
-        final int maxY = max.getBlockY() + 1;
+		final int minY = min.getBlockY();
+		final int maxY = max.getBlockY() + 1;
 
-        final int minZ = min.getBlockZ();
-        final int maxZ = max.getBlockZ() + 1;
+		final int minZ = min.getBlockZ();
+		final int maxZ = max.getBlockZ() + 1;
 
-        final int size = (max.getBlockX() - min.getBlockX())
-                * (max.getBlockY() - min.getBlockY())
-                * (max.getBlockZ() - max.getBlockZ());
+		final int size = (max.getBlockX() - min.getBlockX()) * (max.getBlockY() - min.getBlockY())
+				* (max.getBlockZ() - max.getBlockZ());
 
-        List<Block> lst = new ArrayList<Block>(size);
+		List<Block> lst = new ArrayList<Block>(size);
 
-        for (int x = minX; x < maxX; ++x)
-        {
-            for (int y = minY; y < maxY; ++y)
-            {
-                for (int z = minZ; z < maxZ; ++z)
-                {
-                    lst.add(w.getBlockAt(x, y, z));
-                }
-            }
-        }
+		for (int x = minX; x < maxX; ++x) {
+			for (int y = minY; y < maxY; ++y) {
+				for (int z = minZ; z < maxZ; ++z) {
+					lst.add(w.getBlockAt(x, y, z));
+				}
+			}
+		}
 
-        return lst;
+		return lst;
 
-        /*
-         * World w = min.getWorld(); List<Block> tempList = new
-         * ArrayList<Block>();
-         * 
-         * for (int x = min.getBlockX(); x <= max.getBlockX(); x = x + 1) { for
-         * (int y = min.getBlockY(); y <= max.getBlockY(); y = y + 1) { for (int
-         * z = min.getBlockZ(); z <= max.getBlockZ(); z = z + 1) {
-         * tempList.add(w.getBlockAt(x, y, z)); } } } return tempList;
-         */
-    }
+		/*
+		 * World w = min.getWorld(); List<Block> tempList = new
+		 * ArrayList<Block>();
+		 * 
+		 * for (int x = min.getBlockX(); x <= max.getBlockX(); x = x + 1) { for
+		 * (int y = min.getBlockY(); y <= max.getBlockY(); y = y + 1) { for (int
+		 * z = min.getBlockZ(); z <= max.getBlockZ(); z = z + 1) {
+		 * tempList.add(w.getBlockAt(x, y, z)); } } } return tempList;
+		 */
+	}
 
-    public static int SecondsToTicks(int seconds)
-    {
-        return seconds * 20;
-    }
+	public static int SecondsToTicks(int seconds) {
+		return seconds * 20;
+	}
 
 }
