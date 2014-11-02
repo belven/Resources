@@ -1,9 +1,9 @@
 package resources;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -18,9 +18,10 @@ public class MaterialFunctions {
 	private static final List<String> food = Collections.unmodifiableList(Arrays.asList("MUSHROOM_SOUP",
 			"GOLDEN_APPLE", "COOKED_CHICKEN", "ROTTEN_FLESH", "RAW_CHICKEN", "PORK", "GRILLED_PORK", "BREAD", "MELON",
 			"COOKED_BEEF", "RAW_BEEF", "GOLDEN_CARROT", "CARROT", "COOKIE"));
-	private static final List<String> interactiveBlock = Collections.unmodifiableList(Arrays.asList("CHEST",
-			"WORKBENCH", "ANVIL", "FURNACE", "ENCHANTMENT_TABLE", "ENDER_CHEST", "BED", "MINECART", "SIGN", "BUTTON",
-			"LEVER"));
+	private static final List<Material> interactiveBlock = Collections.unmodifiableList(Arrays.asList(Material.CHEST,
+			Material.WOOD_DOOR, Material.WORKBENCH, Material.ANVIL, Material.FURNACE, Material.ENCHANTMENT_TABLE,
+			Material.ENDER_CHEST, Material.BED, Material.MINECART, Material.SIGN, Material.WOOD_BUTTON, Material.LEVER,
+			Material.STONE_BUTTON, Material.WOODEN_DOOR));
 
 	public static boolean isArmor(Material material) {
 		return armor.indexOf(material.toString()) != -1;
@@ -31,7 +32,7 @@ public class MaterialFunctions {
 	}
 
 	public static boolean isInteractiveBlock(Material material) {
-		return interactiveBlock.indexOf(material.toString()) != -1;
+		return interactiveBlock.indexOf(material) != -1;
 	}
 
 	public static ArrayList<ItemStack> getAllMeeleWeapons() {
