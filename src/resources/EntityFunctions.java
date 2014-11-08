@@ -20,16 +20,16 @@ import org.bukkit.util.Vector;
 public class EntityFunctions {
 
 	public static Player[] getNearbyPlayers(Location l, int radius) {
-		int chunkRadius = radius < 16 ? 1 : (radius - (radius % 16)) / 16;
+		int chunkRadius = radius < 16 ? 1 : (radius - radius % 16) / 16;
 		HashSet<Entity> radiusEntities = new HashSet<Entity>();
 
 		for (int chX = 0 - chunkRadius; chX <= chunkRadius; chX++) {
 			for (int chZ = 0 - chunkRadius; chZ <= chunkRadius; chZ++) {
 				int x = (int) l.getX(), y = (int) l.getY(), z = (int) l.getZ();
 
-				for (Entity e : new Location(l.getWorld(), x + (chX * 16), y, z + (chZ * 16)).getChunk().getEntities()) {
+				for (Entity e : new Location(l.getWorld(), x + chX * 16, y, z + chZ * 16).getChunk().getEntities()) {
 					if (e instanceof Player && e.getLocation().distance(l) <= radius) {
-						radiusEntities.add((Player) e);
+						radiusEntities.add(e);
 					}
 				}
 			}
@@ -90,14 +90,14 @@ public class EntityFunctions {
 			if (count >= maxTargets) {
 				break;
 			}
-			if ((!entity.equals(origin)) && ((entity instanceof LivingEntity))) {
+			if (!entity.equals(origin) && entity instanceof LivingEntity) {
 				LivingEntity living = (LivingEntity) entity;
 
 				Vector toTarget = living.getEyeLocation().toVector().subtract(originVector).normalize();
 
 				double dotProduct = toTarget.dot(originDirection);
-				if ((types.contains(living.getType())) && (dotProduct > 0.3D) && (origin.hasLineOfSight(living))
-						&& ((targets == null) || (dotProduct > minDotProduct))) {
+				if (types.contains(living.getType()) && dotProduct > 0.3D && origin.hasLineOfSight(living)
+						&& (targets == null || dotProduct > minDotProduct)) {
 					count++;
 					targets.add(living);
 					minDotProduct = dotProduct;
@@ -115,14 +115,14 @@ public class EntityFunctions {
 		LivingEntity target = null;
 		double minDotProduct = 4.9E-324D;
 		for (Entity entity : origin.getNearbyEntities(radius, radius, radius)) {
-			if ((!entity.equals(origin)) && ((entity instanceof LivingEntity))) {
+			if (!entity.equals(origin) && entity instanceof LivingEntity) {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
 				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
-				if ((types.contains(living.getType())) && (dotProduct > 0.3D) && (origin.hasLineOfSight(living))
-						&& ((target == null) || (dotProduct > minDotProduct))) {
+				if (types.contains(living.getType()) && dotProduct > 0.3D && origin.hasLineOfSight(living)
+						&& (target == null || dotProduct > minDotProduct)) {
 					target = living;
 					minDotProduct = dotProduct;
 					break;
@@ -140,14 +140,14 @@ public class EntityFunctions {
 		LivingEntity target = null;
 		double minDotProduct = 4.9E-324D;
 		for (Entity entity : origin.getNearbyEntities(radius, radius, radius)) {
-			if ((!entity.equals(origin)) && ((entity instanceof LivingEntity))) {
+			if (!entity.equals(origin) && entity instanceof LivingEntity) {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
 				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
-				if ((living.getType() == type) && (dotProduct > 0.3D) && (origin.hasLineOfSight(living))
-						&& ((target == null) || (dotProduct > minDotProduct))) {
+				if (living.getType() == type && dotProduct > 0.3D && origin.hasLineOfSight(living)
+						&& (target == null || dotProduct > minDotProduct)) {
 					target = living;
 					minDotProduct = dotProduct;
 					break;
@@ -166,7 +166,7 @@ public class EntityFunctions {
 
 		double minDotProduct = 4.9E-324D;
 		for (Entity entity : origin.getNearbyEntities(radius, radius, radius)) {
-			if ((!entity.equals(origin)) && ((entity instanceof LivingEntity))) {
+			if (!entity.equals(origin) && entity instanceof LivingEntity) {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
@@ -190,14 +190,14 @@ public class EntityFunctions {
 		LivingEntity target = null;
 		double minDotProduct = 4.9E-324D;
 		for (Entity entity : origin.getNearbyEntities(radius, radius, radius)) {
-			if (((entity instanceof Player)) && (!entity.equals(origin))) {
+			if (entity instanceof Player && !entity.equals(origin)) {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
 				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
-				if ((dotProduct > 0.3D) && (origin.hasLineOfSight(living))
-						&& ((target == null) || (dotProduct > minDotProduct))) {
+				if (dotProduct > 0.3D && origin.hasLineOfSight(living)
+						&& (target == null || dotProduct > minDotProduct)) {
 					target = living;
 					minDotProduct = dotProduct;
 				}
@@ -223,7 +223,7 @@ public class EntityFunctions {
 
 				for (int i = 0; i < j; i++) {
 					Entity e = arrayOfEntity[i];
-					if ((e.getLocation().distance(l) <= radius) && e instanceof LivingEntity) {
+					if (e.getLocation().distance(l) <= radius && e instanceof LivingEntity) {
 						arrayOfLivingEntity.add((LivingEntity) e);
 					}
 				}
@@ -241,14 +241,14 @@ public class EntityFunctions {
 		LivingEntity target = null;
 		double minDotProduct = 4.9E-324D;
 		for (Entity entity : origin.getNearbyEntities(radius, radius, radius)) {
-			if ((!entity.equals(origin)) && ((entity instanceof LivingEntity))) {
+			if (!entity.equals(origin) && entity instanceof LivingEntity) {
 				LivingEntity living = (LivingEntity) entity;
 				Location newTargetLocation = living.getEyeLocation();
 
 				Vector toTarget = newTargetLocation.toVector().subtract(originVector).normalize();
 				double dotProduct = toTarget.dot(originDirection);
-				if ((dotProduct > 0.3D) && (origin.hasLineOfSight(living))
-						&& ((target == null) || (dotProduct > minDotProduct))) {
+				if (dotProduct > 0.3D && origin.hasLineOfSight(living)
+						&& (target == null || dotProduct > minDotProduct)) {
 					target = living;
 					minDotProduct = dotProduct;
 				}
@@ -311,23 +311,19 @@ public class EntityFunctions {
 	}
 
 	public static void Heal(LivingEntity entityToHeal, int amountToHeal) {
-		Damageable dEntityToHeal = (Damageable) entityToHeal;
-		double max = dEntityToHeal.getMaxHealth();
-		double current = dEntityToHeal.getHealth();
-
-		if (entityToHeal != null) {
-			for (int i = amountToHeal; i != 0; i--) {
-				if ((current + i) < max) {
-					entityToHeal.setHealth(current + i);
-				}
-			}
+		Damageable dEntityToHeal = entityToHeal;
+		double healthToSet = dEntityToHeal.getHealth() + amountToHeal;
+		if (dEntityToHeal.getMaxHealth() < healthToSet) {
+			healthToSet = dEntityToHeal.getMaxHealth();
 		}
+
+		dEntityToHeal.setHealth(healthToSet);
 	}
 
 	public static void RestoreHunger(Player entityToRestore, int amountToRestore) {
 		if (entityToRestore != null) {
 			for (int i = amountToRestore; i != 0; i--) {
-				if ((entityToRestore.getFoodLevel() + i) < 10) {
+				if (entityToRestore.getFoodLevel() + i < 10) {
 					entityToRestore.setFoodLevel(entityToRestore.getFoodLevel() + i);
 				}
 			}
@@ -337,7 +333,7 @@ public class EntityFunctions {
 	public static void RestoreSaturation(Player entityToRestore, int amountToRestore) {
 		if (entityToRestore != null) {
 			for (int i = amountToRestore; i != 0; i--) {
-				if ((entityToRestore.getSaturation() + i) < 10) {
+				if (entityToRestore.getSaturation() + i < 10) {
 					entityToRestore.setSaturation(entityToRestore.getSaturation() + i);
 				}
 			}
@@ -371,7 +367,7 @@ public class EntityFunctions {
 
 		final double mhp = maxHP[mobs.indexOf(entity)];
 
-		return (mhp != -1) ? mhp : slimeSize[(int) (Math.log(((Slime) entity).getSize()) / Math.log(2))];
+		return mhp != -1 ? mhp : slimeSize[(int) (Math.log(((Slime) entity).getSize()) / Math.log(2))];
 	}
 
 	public static Location lookAt(Location loc, Location lookat) {
@@ -388,7 +384,7 @@ public class EntityFunctions {
 			} else {
 				loc.setYaw((float) (0.5 * Math.PI));
 			}
-			loc.setYaw((float) loc.getYaw() - (float) Math.atan(dz / dx));
+			loc.setYaw(loc.getYaw() - (float) Math.atan(dz / dx));
 		} else if (dz < 0) {
 			loc.setYaw((float) Math.PI);
 		}

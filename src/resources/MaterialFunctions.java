@@ -18,10 +18,11 @@ public class MaterialFunctions {
 	private static final List<String> food = Collections.unmodifiableList(Arrays.asList("MUSHROOM_SOUP",
 			"GOLDEN_APPLE", "COOKED_CHICKEN", "ROTTEN_FLESH", "RAW_CHICKEN", "PORK", "GRILLED_PORK", "BREAD", "MELON",
 			"COOKED_BEEF", "RAW_BEEF", "GOLDEN_CARROT", "CARROT", "COOKIE"));
-	private static final List<Material> interactiveBlock = Collections.unmodifiableList(Arrays.asList(Material.CHEST,
-			Material.WOOD_DOOR, Material.WORKBENCH, Material.ANVIL, Material.FURNACE, Material.ENCHANTMENT_TABLE,
-			Material.ENDER_CHEST, Material.BED, Material.MINECART, Material.SIGN, Material.WOOD_BUTTON, Material.LEVER,
-			Material.STONE_BUTTON, Material.WOODEN_DOOR));
+	private static final List<Material> interactiveBlock = Collections.unmodifiableList(Arrays
+			.asList(Material.CHEST, Material.WOOD_DOOR, Material.WORKBENCH, Material.ANVIL, Material.FURNACE,
+					Material.ENCHANTMENT_TABLE, Material.ENDER_CHEST, Material.BED, Material.MINECART, Material.SIGN,
+					Material.WOOD_BUTTON, Material.LEVER, Material.STONE_BUTTON, Material.WOODEN_DOOR,
+					Material.WOOD_PLATE, Material.STONE_PLATE, Material.FENCE_GATE));
 
 	public static boolean isArmor(Material material) {
 		return armor.indexOf(material.toString()) != -1;
