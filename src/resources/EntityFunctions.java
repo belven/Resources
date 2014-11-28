@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.util.Vector;
@@ -61,9 +62,8 @@ public class EntityFunctions {
 			Arrow currentArrow = (Arrow) damagerEntity;
 			return currentArrow.getShooter();
 		} else if (damagerEntity.getType() == EntityType.FIREBALL) {
-			// Fireball currentFireball = (Fireball) damagerEntity;
-			// return currentFireball.getShooter();
-			return null;
+			Projectile currentFireball = (Projectile) damagerEntity;
+			return currentFireball.getShooter();
 		} else {
 			return null;
 		}
