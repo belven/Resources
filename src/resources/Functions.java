@@ -2,6 +2,7 @@ package resources;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,9 +57,23 @@ public class Functions {
 			totalLevel += p.getLevel();
 		}
 
-		AverageLevel = (totalLevel / tempPlayers.length);
+		AverageLevel = totalLevel / tempPlayers.length;
 
 		return AverageLevel;
+	}
+
+	public static int getRandomIndex(Object[] array) {
+		int ran = new Random().nextInt(array.length);
+
+		if (ran == array.length) {
+			ran--;
+		}
+
+		return ran;
+	}
+
+	public static int getRandomIndex(@SuppressWarnings("rawtypes") List array) {
+		return getRandomIndex(array.toArray());
 	}
 
 	// NEEDS TO BE MOVED
@@ -95,12 +110,12 @@ public class Functions {
 
 	// NEEDS TO BE MOVED
 	public static double damageToDo(double damageDone, double currentHealth, double maxHealth) {
-		return damageDone + (damageDone * (1 - EntityFunctions.entityCurrentHealthPercent(currentHealth, maxHealth)));
+		return damageDone + damageDone * (1 - EntityFunctions.entityCurrentHealthPercent(currentHealth, maxHealth));
 	}
 
 	@SuppressWarnings("deprecation")
 	public static void AddToInventory(Player p, ItemStack is, int max) {
-		int maxAmount = (max - is.getAmount()) + 1;
+		int maxAmount = max - is.getAmount() + 1;
 
 		if (is.getMaxStackSize() == 1 && !p.getInventory().contains(is.getType(), 1)) {
 			p.getInventory().addItem(is);
@@ -128,7 +143,7 @@ public class Functions {
 	}
 
 	public static boolean numberBetween(double number, double start, double end) {
-		return (number >= start) && (number < end);
+		return number >= start && number < end;
 	}
 
 	public static List<Block> getBlocksBetweenPoints(Location min, Location max) {
