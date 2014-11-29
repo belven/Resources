@@ -181,7 +181,7 @@ public class EntityFunctions {
 		return targets;
 	}
 
-	public static LivingEntity findTargetPlayer(Player origin, double radius) {
+	public static Player findTargetPlayer(Player origin, double radius) {
 
 		Location originLocation = origin.getEyeLocation();
 		Vector originDirection = originLocation.getDirection();
@@ -203,7 +203,7 @@ public class EntityFunctions {
 				}
 			}
 		}
-		return target;
+		return (Player) target;
 	}
 
 	public static List<LivingEntity> getNearbyEntities(Location l, int radius) {
