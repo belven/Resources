@@ -1,4 +1,4 @@
-package resources;
+package belven.resources;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,3 +1,4 @@
-name: Resources
-main: resources.ResourcesManager
+name: BelvensResources
+main: belven.resources.ResourceManager
 version: 1
+

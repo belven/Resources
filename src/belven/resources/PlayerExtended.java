@@ -1,4 +1,4 @@
-package resources;
+package belven.resources;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

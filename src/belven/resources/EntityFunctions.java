@@ -1,4 +1,4 @@
-package resources;
+package belven.resources;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,10 +60,10 @@ public class EntityFunctions {
 			return (LivingEntity) damagerEntity;
 		} else if (damagerEntity.getType() == EntityType.ARROW) {
 			Arrow currentArrow = (Arrow) damagerEntity;
-			return currentArrow.getShooter();
+			return (LivingEntity) currentArrow.getShooter();
 		} else if (damagerEntity.getType() == EntityType.FIREBALL) {
 			Projectile currentFireball = (Projectile) damagerEntity;
-			return currentFireball.getShooter();
+			return (LivingEntity) currentFireball.getShooter();
 		} else {
 			return null;
 		}

@@ -1,4 +1,4 @@
-package resources;
+package belven.resources;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

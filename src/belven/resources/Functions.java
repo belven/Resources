@@ -1,6 +1,7 @@
-package resources;
+package belven.resources;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +49,7 @@ public class Functions {
 	// NEEDS TO BE MOVED
 	public static int averagePlayerLevel() {
 		@SuppressWarnings("deprecation")
-		Player[] tempPlayers = Bukkit.getServer().getOnlinePlayers();
+		Collection<? extends Player> tempPlayers = Bukkit.getServer().getOnlinePlayers();
 
 		int AverageLevel = 0;
 		int totalLevel = 0;
@@ -57,7 +58,7 @@ public class Functions {
 			totalLevel += p.getLevel();
 		}
 
-		AverageLevel = totalLevel / tempPlayers.length;
+		AverageLevel = totalLevel / tempPlayers.size();
 
 		return AverageLevel;
 	}
@@ -79,7 +80,7 @@ public class Functions {
 	// NEEDS TO BE MOVED
 	public static int maxPlayerLevel() {
 		@SuppressWarnings("deprecation")
-		Player[] tempPlayers = Bukkit.getServer().getOnlinePlayers();
+		Collection<? extends Player> tempPlayers = Bukkit.getServer().getOnlinePlayers();
 
 		int maxLevel = 0;
 
