@@ -39,7 +39,6 @@ public class EntityFunctions {
 		return radiusEntities.toArray(new Player[radiusEntities.size()]);
 	}
 
-	@SuppressWarnings("deprecation")
 	public static Player[] getNearbyPlayersNew(Location l, int radius) {
 		HashSet<Entity> radiusEntities = new HashSet<Entity>();
 
@@ -52,7 +51,6 @@ public class EntityFunctions {
 		return radiusEntities.toArray(new Player[radiusEntities.size()]);
 	}
 
-	@SuppressWarnings("deprecation")
 	public static LivingEntity GetDamager(EntityDamageByEntityEvent event) {
 		Entity damagerEntity = event.getDamager();
 
@@ -313,6 +311,13 @@ public class EntityFunctions {
 	public static void Heal(LivingEntity entityToHeal, int amountToHeal) {
 		Damageable dEntityToHeal = entityToHeal;
 		double healthToSet = dEntityToHeal.getHealth() + amountToHeal;
+
+		if (healthToSet < 0) {
+			healthToSet = 0;
+		} else if (healthToSet > 80) {
+			healthToSet = 80;
+		}
+
 		if (dEntityToHeal.getMaxHealth() < healthToSet) {
 			healthToSet = dEntityToHeal.getMaxHealth();
 		}

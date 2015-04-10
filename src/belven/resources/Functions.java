@@ -2,7 +2,9 @@ package belven.resources;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -10,11 +12,17 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+
+import com.google.common.base.Function;
 
 public class Functions {
 
@@ -35,6 +43,24 @@ public class Functions {
 		}
 	}
 
+	public synchronized static void callDamageEvent(LivingEntity damager, LivingEntity damagee, double damage) {
+		if (damager == null || damagee == null) {
+			return;
+		}
+
+		HashMap<DamageModifier, Double> damageMap = new HashMap<>();
+		damageMap.put(DamageModifier.BASE, damage);
+
+		Map<DamageModifier, Function<? super Double, Double>> functions = new HashMap<>();
+		functions.put(DamageModifier.BASE, com.google.common.base.Functions.constant(damage));
+
+		EntityDamageByEntityEvent ede = new EntityDamageByEntityEvent(damager, damagee, DamageCause.CUSTOM, damageMap,
+				functions);
+
+		Bukkit.getPluginManager().callEvent(ede);
+		// return ede;
+	}
+
 	// NEEDS TO BE MOVED
 	public static int abilityCap(double maxAmount, double currentLevel) {
 		int tempCap = (int) (maxAmount * (currentLevel / getBaseMaxLevel()));
@@ -48,7 +74,6 @@ public class Functions {
 
 	// NEEDS TO BE MOVED
 	public static int averagePlayerLevel() {
-		@SuppressWarnings("deprecation")
 		Collection<? extends Player> tempPlayers = Bukkit.getServer().getOnlinePlayers();
 
 		int AverageLevel = 0;
@@ -79,7 +104,6 @@ public class Functions {
 
 	// NEEDS TO BE MOVED
 	public static int maxPlayerLevel() {
-		@SuppressWarnings("deprecation")
 		Collection<? extends Player> tempPlayers = Bukkit.getServer().getOnlinePlayers();
 
 		int maxLevel = 0;
@@ -114,7 +138,6 @@ public class Functions {
 		return damageDone + damageDone * (1 - EntityFunctions.entityCurrentHealthPercent(currentHealth, maxHealth));
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void AddToInventory(Player p, ItemStack is, int max) {
 		int maxAmount = max - is.getAmount() + 1;
 
@@ -175,15 +198,10 @@ public class Functions {
 
 		return lst;
 
-		/*
-		 * World w = min.getWorld(); List<Block> tempList = new
-		 * ArrayList<Block>();
+		/* World w = min.getWorld(); List<Block> tempList = new ArrayList<Block>();
 		 * 
-		 * for (int x = min.getBlockX(); x <= max.getBlockX(); x = x + 1) { for
-		 * (int y = min.getBlockY(); y <= max.getBlockY(); y = y + 1) { for (int
-		 * z = min.getBlockZ(); z <= max.getBlockZ(); z = z + 1) {
-		 * tempList.add(w.getBlockAt(x, y, z)); } } } return tempList;
-		 */
+		 * for (int x = min.getBlockX(); x <= max.getBlockX(); x = x + 1) { for (int y = min.getBlockY(); y <= max.getBlockY(); y = y + 1)
+		 * { for (int z = min.getBlockZ(); z <= max.getBlockZ(); z = z + 1) { tempList.add(w.getBlockAt(x, y, z)); } } } return tempList; */
 	}
 
 	public static int SecondsToTicks(int seconds) {

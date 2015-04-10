@@ -2,8 +2,6 @@ package belven.resources;
 
 import org.bukkit.inventory.ItemStack;
 
-import belven.resources.MaterialFunctions;
-
 public class ClassDrop {
 	public ItemStack is;
 	public int lowChance;
