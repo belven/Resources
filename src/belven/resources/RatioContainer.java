@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
+
 public class RatioContainer<T> {
 	private T t;
 	private Random random = new Random();
@@ -16,7 +18,7 @@ public class RatioContainer<T> {
 	public T get() {
 		return t;
 	}
-	
+
 	public List<Ratio<T, Double>> getRatios() {
 		return ratios;
 	}
@@ -50,12 +52,21 @@ public class RatioContainer<T> {
 	public List<Ratio<T, Double>> getListActualValues() {
 		int index = -1;
 		double totalRatio = getTotalRatio();
+		Bukkit.getServer().getLogger().info("total Ratio: " + String.valueOf(totalRatio));
+
 		List<Ratio<T, Double>> tempRatios = new ArrayList<>();
 
 		for (Ratio<T, Double> ratio : ratios) {
-			double value = index == -1 ? ratio.getValue() / totalRatio : tempRatios.get(index).getValue()
-					+ (ratio.getValue() / totalRatio);
-			tempRatios.add(new Ratio<T, Double>(ratio.getKey(), value * 100));
+			double value = 0.0;
+			if (index == -1) {
+				value = ratio.getValue() / totalRatio * 100;
+			} else {
+				double tempValue = ratio.getValue() / totalRatio * 100;
+				value = tempValue + tempRatios.get(index).getValue();
+			}
+			Bukkit.getServer().getLogger().info("value: " + String.valueOf(value));
+
+			tempRatios.add(new Ratio<T, Double>(ratio.getKey(), value));
 			index++;
 		}
 		return tempRatios;
@@ -65,9 +76,9 @@ public class RatioContainer<T> {
 		List<Ratio<T, Double>> tempRatios = getListActualValues();
 		int rand = random.nextInt(100);
 
-		for (int i = 0; i < tempRatios.size(); i++) {
-			if (rand < tempRatios.get(i).getValue()) {
-				return tempRatios.get(i).getKey();
+		for (Ratio<T, Double> ratio : tempRatios) {
+			if (rand < ratio.getValue()) {
+				return ratio.getKey();
 			}
 		}
 		return null;
