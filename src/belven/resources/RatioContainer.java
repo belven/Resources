@@ -50,8 +50,9 @@ public class RatioContainer<T> {
 
 		for (Ratio<T, Double> ratio : ratios) {
 			double value = index == -1 ? ratio.getValue() / totalRatio : tempRatios.get(index).getValue()
-					+ ratio.getValue() / totalRatio;
+					+ (ratio.getValue() / totalRatio);
 			tempRatios.add(new Ratio<T, Double>(ratio.getKey(), value * 100));
+			index++;
 		}
 		return tempRatios;
 	}
