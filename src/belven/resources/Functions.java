@@ -1,6 +1,7 @@
 package belven.resources;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -25,22 +26,12 @@ import org.bukkit.potion.PotionType;
 import com.google.common.base.Function;
 
 public class Functions {
+	private final static List<PotionEffectType> negativeEffects = Arrays.asList(PotionEffectType.HUNGER,
+			PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.POISON, PotionEffectType.SLOW,
+			PotionEffectType.SLOW_DIGGING, PotionEffectType.WEAKNESS, PotionEffectType.WITHER);
 
 	public static boolean debuffs(PotionEffectType pet) {
-		switch (pet.toString()) {
-		case "HUNGER":
-		case "BLINDNESS":
-		case "CONFUSION":
-		case "POISON":
-		case "SLOW":
-		case "SLOW_DIGGING":
-		case "WEAKNESS":
-		case "WITHER":
-			return true;
-
-		default:
-			return false;
-		}
+		return negativeEffects.indexOf(pet) != -1;
 	}
 
 	public synchronized static void callDamageEvent(LivingEntity damager, LivingEntity damagee, double damage) {
@@ -98,7 +89,7 @@ public class Functions {
 		return ran;
 	}
 
-	public static int getRandomIndex(@SuppressWarnings("rawtypes") List array) {
+	public static int getRandomIndex(List<?> array) {
 		return getRandomIndex(array.toArray());
 	}
 
