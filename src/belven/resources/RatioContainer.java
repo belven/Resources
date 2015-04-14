@@ -16,6 +16,10 @@ public class RatioContainer<T> {
 	public T get() {
 		return t;
 	}
+	
+	public List<Ratio<T, Double>> getRatios() {
+		return ratios;
+	}
 
 	public void Add(Ratio<T, Double> ratio) {
 		ratios.add(ratio);
