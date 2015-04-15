@@ -19,6 +19,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Dye;
+import org.bukkit.material.Wool;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -129,16 +131,38 @@ public class Functions {
 		return damageDone + damageDone * (1 - EntityFunctions.entityCurrentHealthPercent(currentHealth, maxHealth));
 	}
 
-	public static void AddToInventory(Player p, ItemStack is, int max) {
+	public static boolean AddToInventory(Player p, ItemStack is, int max) {
 		int maxAmount = max - is.getAmount() + 1;
 
 		if (is.getMaxStackSize() == 1 && !p.getInventory().contains(is.getType(), 1)) {
 			p.getInventory().addItem(is);
 		} else if (!p.getInventory().contains(is.getType(), maxAmount)) {
 			p.getInventory().addItem(is);
+		} else if (p.getInventory().contains(is.getType(), maxAmount)) {
+			for (ItemStack newIs : p.getInventory()) {
+				if (newIs != null && newIs.getType() == is.getType() && hasSameItemData(newIs, is)) {
+					if (newIs.getAmount() < maxAmount) {
+						is.setAmount(maxAmount - newIs.getAmount());
+						p.getInventory().addItem(is);
+					}
+				}
+			}
+		} else {
+			return false;
 		}
 
 		p.updateInventory();
+		return true;
+	}
+
+	private static boolean hasSameItemData(ItemStack is, ItemStack iis) {
+		if (is.getType() == Material.INK_SACK) {
+			return ((Dye) is.getData()).getColor().equals(((Dye) iis.getData()).getColor());
+		} else if (is.getType() == Material.WOOL) {
+			return ((Wool) is.getData()).getColor().equals(((Wool) iis.getData()).getColor());
+		}
+
+		return true;
 	}
 
 	public static void AddToInventory(Player p, ItemStack is) {
