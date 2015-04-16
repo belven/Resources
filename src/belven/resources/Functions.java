@@ -134,18 +134,30 @@ public class Functions {
 	public static boolean AddToInventory(Player p, ItemStack is, int max) {
 		int maxAmount = max - is.getAmount() + 1;
 
+		// We only want to add items that have a max stack size of 1 if we don't have 1
 		if (is.getMaxStackSize() == 1 && !p.getInventory().contains(is.getType(), 1)) {
 			p.getInventory().addItem(is);
+			// Add if we simply don't have the total amount, no need to test anything else
 		} else if (!p.getInventory().contains(is.getType(), maxAmount)) {
 			p.getInventory().addItem(is);
+			// If we have the max, then we need to check the ItemMeta to ensure we check the same types
+			// E.g. colour of dyes and wool
 		} else if (p.getInventory().contains(is.getType(), maxAmount)) {
+			int total = 0;
+
+			// Get the total amount of items of the same type and meta, as the stacks could be split
 			for (ItemStack newIs : p.getInventory()) {
 				if (newIs != null && newIs.getType() == is.getType() && hasSameItemData(newIs, is)) {
-					if (newIs.getAmount() < maxAmount) {
-						is.setAmount(maxAmount - newIs.getAmount());
-						p.getInventory().addItem(is);
-					}
+					total += newIs.getAmount();
 				}
+			}
+
+			// Do we still need to add anything
+			if (total < maxAmount) {
+				is.setAmount(maxAmount - total);
+				p.getInventory().addItem(is);
+			} else {
+				return false;
 			}
 		} else {
 			return false;
